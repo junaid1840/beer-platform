@@ -38,23 +38,36 @@
     </v-app-bar>
 
     <v-main>
-      <HelloWorld/>
+      <Filters @filterQuery="filterBeers" />
+      <Datatable :beerItems="beerItems" />
     </v-main>
   </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld';
+import Datatable from './components/Datatable';
+import Filters from './components/Filters';
+import { getAllBeers, getFilteredBeers } from "./services/api"
 
 export default {
   name: 'App',
 
   components: {
-    HelloWorld,
+    Datatable,
+    Filters
   },
 
   data: () => ({
-    //
+    beerItems: []
   }),
+
+  async created() {
+    this.beerItems = await getAllBeers();
+  },
+  methods: {
+    async filterBeers(filterQuery) {
+      this.beerItems = await getFilteredBeers(filterQuery);
+    }
+  }
 };
 </script>
