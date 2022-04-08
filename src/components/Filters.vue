@@ -1,27 +1,33 @@
 <template>
   <v-container>
     <div v-for="(filterInput, index) in filterInputs" :key="'filter-input-'+index">
-      <div class="d-flex flex-row mb-6" >
-        <b>{{filterInput.label}}</b>
-        <v-select
-            :items="filterInput.conditionOptions"
-            v-model="filterInput.conditionValue"
-            label="Condition"
-        ></v-select>
-        <v-text-field v-if="filterInput.conditionType === 'text'" label="filter value" v-model="filterInput.value"></v-text-field>
-        <v-menu v-if="filterInput.conditionType === 'date'" v-model="menu" :close-on-content-click="false" offset-y min-width="290px">
-          <template v-slot:activator="{ on, attrs }">
-            <v-text-field
-                type="text"
-                v-model="filterInput.value"
-                readonly
-                v-bind="attrs"
-                v-on="on"
-                label="Date"
-            />
-          </template>
-          <v-date-picker v-model="filterInput.value" @input="menu = false"></v-date-picker>
-        </v-menu>
+      <div class="d-flex align-center mb-6">
+        <div class="flex-cell">
+          <b>{{filterInput.label}}</b>
+        </div>
+        <div class="flex-cell">
+          <v-select
+              :items="filterInput.conditionOptions"
+              v-model="filterInput.conditionValue"
+              label="Condition"
+          ></v-select>
+        </div>
+        <div class="flex-cell">
+          <v-text-field v-if="filterInput.conditionType === 'text'" label="filter value" v-model="filterInput.value"></v-text-field>
+          <v-menu v-if="filterInput.conditionType === 'date'" v-model="menu" :close-on-content-click="false" offset-y min-width="290px">
+            <template v-slot:activator="{ on, attrs }">
+              <v-text-field
+                  type="text"
+                  v-model="filterInput.value"
+                  readonly
+                  v-bind="attrs"
+                  v-on="on"
+                  label="Date"
+              />
+            </template>
+            <v-date-picker v-model="filterInput.value" @input="menu = false"></v-date-picker>
+          </v-menu>
+        </div>
       </div>
     </div>
     <v-btn @click="filter"> Filter </v-btn>
@@ -116,5 +122,13 @@ export default {
 </script>
 
 <style scoped>
-
+.flex-cell {
+  width: 40%;
+}
+.flex-cell:first-child {
+  width: 10%;
+}
+.flex-cell:last-child {
+  margin-left: auto;
+}
 </style>
